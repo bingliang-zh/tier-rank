@@ -68,6 +68,17 @@ function App() {
     }
   };
 
+  const handleShuffle = () => {
+    setPoolItems((prev) => {
+      const newItems = [...prev];
+      for (let i = newItems.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [newItems[i], newItems[j]] = [newItems[j], newItems[i]];
+      }
+      return newItems;
+    });
+  };
+
   const findContainer = (id: string): string | undefined => {
     if (poolItems.find((i) => i.id === id)) return 'pool';
     const tier = tiers.find((t) => t.items.find((i) => i.id === id));
@@ -235,7 +246,12 @@ function App() {
             ))}
           </div>
 
-          <ItemPool id="pool" items={poolItems} onUpload={handleFileUpload} />
+          <ItemPool 
+            id="pool" 
+            items={poolItems} 
+            onUpload={handleFileUpload} 
+            onShuffle={handleShuffle}
+          />
 
           <DragOverlay dropAnimation={dropAnimation}>
             {activeItem ? <SortableItem item={activeItem} /> : null}

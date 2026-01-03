@@ -8,9 +8,10 @@ interface Props {
   items: Item[];
   id: string;
   onUpload: (event: ChangeEvent<HTMLInputElement>) => void;
+  onShuffle: () => void;
 }
 
-export const ItemPool = ({ items, id, onUpload }: Props) => {
+export const ItemPool = ({ items, id, onUpload, onShuffle }: Props) => {
   const { setNodeRef } = useDroppable({
     id: id,
     data: { type: 'pool' },
@@ -18,7 +19,7 @@ export const ItemPool = ({ items, id, onUpload }: Props) => {
 
   return (
     <div className="mt-8 p-4 bg-gray-800 rounded-lg min-h-[200px]">
-      <div className="mb-4">
+      <div className="mb-4 flex gap-4">
         <label className="cursor-pointer bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded inline-flex items-center">
           <span>上传图片</span>
           <input
@@ -29,6 +30,12 @@ export const ItemPool = ({ items, id, onUpload }: Props) => {
             className="hidden"
           />
         </label>
+        <button
+          onClick={onShuffle}
+          className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded"
+        >
+          洗牌
+        </button>
       </div>
       <div
         ref={setNodeRef}
